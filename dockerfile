@@ -14,7 +14,6 @@ ENV NODE_OPTIONS=--max-old-space-size=2048
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# IMPORTANT: do NOT use "yarn build" here because CIPP's build script removes package.json/yarn.lock
 RUN ./node_modules/.bin/next build
 
 FROM node:22-alpine AS runner
@@ -33,4 +32,3 @@ COPY --from=build /app/node_modules ./node_modules
 EXPOSE 3000
 
 CMD ["./node_modules/.bin/next", "start", "-p", "3000"]
-``
